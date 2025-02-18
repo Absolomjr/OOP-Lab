@@ -1,0 +1,55 @@
+# i. Vehicle Class
+class Vehicle:
+    def __init__(self, make, model, year):
+        self.make = make
+        self.model = model
+        self.year = year
+
+# ii. Car Class inheriting from Vehicle
+class Car(Vehicle):
+    def __init__(self, make, model, year, fuel_type, tank_capacity):
+        super().__init__(make, model, year)
+        self.fuel_type = fuel_type
+        self.tank_capacity = tank_capacity
+        self.fuel_level = 0  # Initialize fuel level to 0
+
+    # b) Method to refuel the car
+    def refuel(self, amount):
+        if amount <= 0:
+            print("Refuel amount must be positive.")
+        elif self.fuel_level + amount > self.tank_capacity:
+            print("Cannot refuel beyond tank capacity.")
+            self.fuel_level = self.tank_capacity  # Set to max capacity
+        else:
+            self.fuel_level += amount
+            print(f"Refueled {amount} liters. Current fuel level: {self.fuel_level} liters.")
+
+    # c) Simulate driving
+    def drive(self, distance):
+        fuel_needed = distance / 15  # Assuming 15 km per liter
+        if fuel_needed > self.fuel_level:
+            print("Not enough fuel to drive this distance.")
+        else:
+            self.fuel_level -= fuel_needed
+            print(f"Drove {distance} km. Fuel remaining: {self.fuel_level} liters.")
+
+    # d) Display vehicle information
+    def display_vehicle_info(self):
+        print(f"Vehicle: {self.make} {self.model} ({self.year})")
+        print(f"Fuel Type: {self.fuel_type}")
+        print(f"Tank Capacity: {self.tank_capacity} liters")
+        print(f"Current Fuel Level: {self.fuel_level} liters")
+
+
+# c) Creating a Car Object and Simulating Driving and Refueling
+my_car = Car(make="Toyota", model="Corolla", year=2022, fuel_type="Petrol", tank_capacity=50)
+
+# Displaying initial car details
+my_car.display_vehicle_info()
+
+# Simulating driving and refueling
+my_car.refuel(30)  # Refueling 30 liters
+my_car.drive(100)  # Driving 100 km
+my_car.refuel(25)  # Attempt to refuel 25 liters (to test capacity limit)
+my_car.drive(200)  # Driving 200 km
+my_car.display_vehicle_info()  # Displaying updated car details
